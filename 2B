@@ -1,0 +1,49 @@
+
+# Lab-2B Activities
+
+#Perform data preprocesing for Automobile.csv
+
+#i. Delete the column horsepower since it has few missing values
+
+#ii. Impute missing with meadin
+
+#iii. Apply min-max scaling and standardization on the Automobiles.csv and provide the reasoning which feature scaling method make more sense to this dataset.
+
+
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+
+
+DF = pd.read_csv("Automobile.csv")
+
+
+DF.head()
+DF.info()
+
+
+DF.isnull().sum()
+
+DF.drop("horsepower", axis=1, inplace=True)
+DF.info()
+
+DF["cylinders"].fillna(DF["cylinders"].median(), inplace=True)
+DF["displacement"].fillna(DF["displacement"].median(), inplace=True)
+DF["weight"].fillna(DF["weight"].median(), inplace=True)
+DF["acceleration"].fillna(DF["acceleration"].median(), inplace=True)
+
+DF.info()
+DF.isnull().sum()
+
+c = ["mpg","cylinders","displacement","weight","acceleration","model_year"]
+SC1 = StandardScaler()
+DF[c] = SC1.fit_transform(DF[c])
+DF.head()
+
+SC2 = MinMaxScaler()
+DF[c] = SC2.fit_transform(DF[c])
+DF.head()
+
+newDF = DF.copy()
+newDF.to_csv("Automobile_Preprocessed.csv", index=False)
+newDF.head()
