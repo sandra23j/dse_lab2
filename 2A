@@ -1,0 +1,45 @@
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+DF = pd.read_csv("C:/Users/sandr/Downloads/data.csv")
+
+DF.head()
+
+DF.info()
+
+
+
+DF.isnull().sum()
+
+
+
+DF.dropna(subset="salary",inplace=True)
+DF.info()
+
+DF["hsc_p"].fillna(DF["hsc_p"].mean(),inplace=True)
+DF["degree_p"].fillna(DF["degree_p"].mean(),inplace=True)
+DF["etest_p"].fillna(DF["etest_p"].mean(),inplace=True)
+DF.info()
+
+StandardScaler()
+
+
+c =["hsc_p","degree_p","etest_p","salary"]
+SC1 = StandardScaler()
+DF[c] =SC1.fit_transform(DF[c])
+DF.head()
+MinMaxScaler()
+
+c =["hsc_p","degree_p","etest_p","salary"]
+SC1 = MinMaxScaler()
+DF[c] =SC1.fit_transform(DF[c])
+DF.head()
+
+
+x = DF[["gender","hsc_p","hsc_s","degree_p","degree_t","etest_p","specialisation","mba_p"	]]
+y = DF["salary"]
+y.head()
+
+newDF = pd.concat([x,y],axis=1)
+newDF.to_csv("Pre1.csv",index=False)
+newDF.head()
